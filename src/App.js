@@ -1,5 +1,6 @@
 import React from 'react'
 import * as BooksAPI from './BooksAPI'
+import { Route } from 'react-router-dom'
 import ContentMock from './components/ContentMock'
 import './App.css'
 
@@ -11,16 +12,24 @@ class BooksApp extends React.Component {
      * users can use the browser's back and forward buttons to navigate between
      * pages, as well as provide a good URL they can bookmark and share.
      */
-    showSearchPage: true
+    showSearchPage: true  // remove this as I'm using routing?
   }
 
   render() {
     return (
       <div className="app">
-        {this.state.showSearchPage ? (
+
+        <Route exact path="/" render={() => (
+
+          <ContentMock />
+
+        )}/>
+
+        <Route exact path="/search" render={() => (
+
           <div className="search-books">
             <div className="search-books-bar">
-              <a className="close-search" onClick={() => this.setState({ showSearchPage: false })}>Close</a>
+              <a className="close-search" href="./" onClick={() => this.setState({ showSearchPage: false })}>Close</a>
               <div className="search-books-input-wrapper">
                 {/* 
                   NOTES: The search from BooksAPI is limited to a particular set of search terms.
@@ -37,10 +46,17 @@ class BooksApp extends React.Component {
             <div className="search-books-results">
               <ol className="books-grid"></ol>
             </div>
+          </div>          
+
+        )}/>
+
+        <Route exact path="/author" render={() => (
+          <div>
+            <p>This web app was made by Oliver Schafeld as part of Udacity ReactJS Nanodegree program.</p>
+            <p>Back to <a href="./">start page</a> or go to <a href="./search">search page</a>.</p>
           </div>
-        ) : (
-          <ContentMock />
-        )}
+        )}/>
+
       </div>
     )
   }
