@@ -29,7 +29,7 @@ export default class BookList extends Component {
     {
       name: `read`,
       heading: `Read`
-    },
+    }
   ]
 
   render(){
