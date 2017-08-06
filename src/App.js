@@ -30,7 +30,6 @@ export default class BooksApp extends Component {
     return (
       <div className="app">
 
-        { /* start page,  (used to be showSearchPage: true) */ }
           <Route
             exact path="/"
             render={()=>(
@@ -43,7 +42,6 @@ export default class BooksApp extends Component {
             )}
           />
 
-        { /* search page, search bar and book displayed in categories (used to be showSearchPage: false) */}
           <Route
             exact path="/search"
             render={({history}) => (
@@ -57,7 +55,6 @@ export default class BooksApp extends Component {
             )}
           />
 
-        { /* about page, 'copyleft' and author information */}
         <Route exact path="/author" render={() => (
           <div>
             <p>This web app was made by Oliver Schafeld as part of Udacity ReactJS Nanodegree program.</p>
