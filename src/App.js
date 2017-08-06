@@ -1,55 +1,67 @@
-import React from 'react'
+import React, { Component } from 'react'
 import * as BooksAPI from './BooksAPI'
 import { Route } from 'react-router-dom'
-import ContentMock from './components/ContentMock'
+// import SearchBar from './components/SearchBar'
+// import BookshelfTable from './components/BookshelfTable'
+
+
+import BookSearch from './components/BookSearch'
+import BookList from './components/BookList'
+
 import './App.css'
 
-class BooksApp extends React.Component {
+export default class BooksApp extends Component {
   state = {
-    /**
-     * TODO: Instead of using this state variable to keep track of which page
-     * we're on, use the URL in the browser's address bar. This will ensure that
-     * users can use the browser's back and forward buttons to navigate between
-     * pages, as well as provide a good URL they can bookmark and share.
-     */
-    showSearchPage: true  // remove this as I'm using routing?
+    books: []
+  }
+
+  componentDidMount(){
+    this.fetchMyBooks()
+  }
+
+  fetchMyBooks = () => {
+    BooksAPI.getAll().then((books) => this.setState({ books }))
+  }
+
+  changeShelf = (id,shelf) => {
+    BooksAPI.update({id},shelf).then(()=>{
+      this.fetchMyBooks()
+    })
   }
 
   render() {
+
     return (
       <div className="app">
 
-        <Route exact path="/" render={() => (
+        { /* start page,  (used to be showSearchPage: true) */ }
+          <Route
+            exact path="/"
+            render={()=>(
+              <BookList
+                books={this.state.books}
+                onShelfChange={(id,shelf)=>{
+                  this.changeShelf(id,shelf)
+                }}
+              />
+            )}
+          />
 
-          <ContentMock />
+        { /* search page, search bar and book displayed in categories (used to be showSearchPage: false) */}
+          <Route
+            exact path="/search"
+            render={({history}) => (
+              <BookSearch
+                myBooks={this.state.books}
+                onShelfChange={(id,shelf)=>{
+                  this.changeShelf(id,shelf)
+                  history.push('/')
+                }}
+              />
+            )}
+          />
 
-        )}/>
-
-        <Route exact path="/search" render={() => (
-
-          <div className="search-books">
-            <div className="search-books-bar">
-              <a className="close-search" href="./" onClick={() => this.setState({ showSearchPage: false })}>Close</a>
-              <div className="search-books-input-wrapper">
-                {/* 
-                  NOTES: The search from BooksAPI is limited to a particular set of search terms.
-                  You can find these search terms here:
-                  https://github.com/udacity/reactnd-project-myreads-starter/blob/master/SEARCH_TERMS.md
-                  
-                  However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
-                  you don't find a specific author or title. Every search is limited by search terms.
-                */}
-                <input type="text" placeholder="Search by title or author"/>
-                
-              </div>
-            </div>
-            <div className="search-books-results">
-              <ol className="books-grid"></ol>
-            </div>
-          </div>          
-
-        )}/>
-
+        { /* about page, 'copyleft' and author information */}
         <Route exact path="/author" render={() => (
           <div>
             <p>This web app was made by Oliver Schafeld as part of Udacity ReactJS Nanodegree program.</p>
@@ -61,5 +73,3 @@ class BooksApp extends React.Component {
     )
   }
 }
-
-export default BooksApp

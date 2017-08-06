@@ -172,3 +172,11 @@ body, .app {
   text-align: center;
   font-size: 0.8em;
 }
+
+
+/* customization */
+.footer {
+  border-top: 1px solid #dedede;
+  color: #ggg;
+  font-size: 0.8em;
+}
