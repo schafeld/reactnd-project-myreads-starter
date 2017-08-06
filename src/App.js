@@ -1,10 +1,6 @@
 import React, { Component } from 'react'
 import * as BooksAPI from './BooksAPI'
 import { Route } from 'react-router-dom'
-// import SearchBar from './components/SearchBar'
-// import BookshelfTable from './components/BookshelfTable'
-
-
 import BookSearch from './components/BookSearch'
 import BookList from './components/BookList'
 
