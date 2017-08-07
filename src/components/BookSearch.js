@@ -11,6 +11,21 @@ export default class BookSearch extends Component {
     query: ''
   }
 
+  // If one of the books from the search results already exists in my list of books 
+  // (i.e. sits on any shelf), assign the appropriate shelf type to it.
+  assignToShelf = (booksFound,booksOnShelf) => {
+    booksFound.map((bookFound) => {
+      booksOnShelf.forEach((bookOnShelf) => {
+        if(bookOnShelf.id === bookFound.id){
+          bookFound.shelf = bookOnShelf.shelf
+        }
+      })
+      return bookFound
+    })
+    return booksFound
+  }
+
+
   updateQuery = (event) => {
     const value = event.target.value.trim()
     this.setState({query: value})
@@ -22,6 +37,9 @@ export default class BookSearch extends Component {
       BooksAPI.search(value, 5).then((booksFound) => {
         if(booksFound.length > 0){
           booksFound = booksFound.filter((book) => book.imageLinks)
+
+          booksFound = this.assignToShelf(booksFound,this.props.myBooks)
+
           this.setState({booksFound})
         } else {
           this.setState({
