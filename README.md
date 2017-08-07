@@ -4,6 +4,19 @@ The code is based on the starter template for the final assessment project for U
 
 Of course, you are free to start this project from scratch if you wish! Just be sure to use [Create React App](https://github.com/facebookincubator/create-react-app) to bootstrap the project.
 
+## Installation
+Check out the source code with
+`git clone https://github.com/schafeld/reactnd-project-myreads-starter.git` 
+
+Change into directory  `reactnd-project-myreads-starter`.
+
+Run `npm install` to install required dependencies.
+
+When this installation has finished start the project with `npm start`.
+
+The program will run in your browser at    `http://localhost:3000/`.
+
+
 ## What You're Getting
 ```
 +--public/    
